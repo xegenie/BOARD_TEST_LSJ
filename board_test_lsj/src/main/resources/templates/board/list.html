@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 목록</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>게시글 목록</h1>
+
+        <div class="btn">
+            <a href="/">메인 페이지</a>
+            <a href="/board/insert">글 작성</a>
+        </div>
+        <div class="list">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일자</th>
+                        <th>수정일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="board : ${list}">
+                        <td th:text="${board.no}"></td>
+                        <td>
+                            <a th:href="@{/board/read(id=${board.id})}" th:text="${board.title}"></a>
+                        </td>
+                        <td th:text="${board.writer}"></td>
+                        <td th:text="${#dates.format( board.createdAt, 'yyyy-MM-dd HH:mm:ss' )}"></td>
+                    <td th:text="${#dates.format( board.updatedAt, 'yyyy-MM-dd HH:mm:ss' )}"></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+     <div class="pagenation">
+        <a th:href="@{'?page=' + ${page.first} }">[처음]</a>
+        <th:block th:if="${page.page != page.first}">
+            <a th:href="@{'?page=' + ${page.prev} }">[이전]</a>
+        </th:block>
+            <th:block th:each="no : ${#numbers.sequence(page.start, page.end)}">
+                <th:block th:if="${page.page == no}">
+                    <b th:text="${no}"></b>
+                </th:block>
+                <th:block th:if="${page.page != no}">
+                    <a th:href="@{'?page=' + ${no} }" th:text="${no}"></a>
+                </th:block>
+            </th:block>
+            <th:block th:if="${page.page != page.last}">
+                <a th:href="@{'?page=' + ${page.next} }">[다음]</a>
+            </th:block>
+            <a th:href="@{'?page=' + ${page.last} }">[마지막]</a>
+        </div>
+</body>
+</html>

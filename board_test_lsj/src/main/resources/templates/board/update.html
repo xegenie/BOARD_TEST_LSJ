@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>글 수정</title>
+</head>
+<body>
+    <div class="container">
+        <h1>글 수정</h1>
+        <div class="insert">
+            <form action="/board/update" method="POST">
+                <input type="hidden" name="id" th:value="${board.id}">
+                <span>제목</span><input type="text" name="title" id="title" th:value="${board.title}">
+                <span>작성자</span><input type="text" name="writer" id="writer" th:value="${board.writer}">
+                <span>내용</span><textarea name="content" id="content" th:text="${board.content}"></textarea>
+                <button type="submit">수정</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
